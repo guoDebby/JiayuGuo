@@ -1,0 +1,12 @@
+Memo 1
+Date:9/15/2014
+From: Jiayu Guo
+To: Dr. Yoder
+
+  So far, the Etch-a-sketch and buttons-LEDs are combined together programming in javascript language.
+  On the board the 4 LEDs corresponding to those 4 buttons, as well as the grid of characters shows where the pen controlled by buttons has been.
+  Once push up button the up LED will light on, and so on. And also there is a clear button which can clear whole grid.
+  Pin11,13,17,18 are used as buttons and pin12,14,15,16 are used as LEDs; pin23 is used as clear button.
+  I was using digitalread and a while loop to do this home work. But my new program with interrupt is more efficiency!
+
+
