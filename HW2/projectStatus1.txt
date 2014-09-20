@@ -1,0 +1,15 @@
+Memo 1
+Date: 9/15/2014
+From: Jiayu Guo
+To: Dr. Yoder
+
+So far, the Etch-a-sketch and buttons-LEDs are combined together programming in JavaScript language. 
+For Week 1, the Etch-a-sketch was finished in C language as Homework1. This week I wrote up the buttons- LEDs corresponding, and translated Homework1 from C to JavaScript.
+On the board the 4 LEDs corresponding to those 4 buttons, as well as the grid of characters shows where the pen controlled by buttons has been. 
+Once push up button the up LED will light on, and so on. And also there is a clear button which is used to clear whole grid at as time display a clearing message on screen.
+Hardware wiring: Pin11, 13, 17, 18 are used as buttons and pin12, 14, 15, 16 are used as LEDs; pin23 is used as clear button. 
+I was using digitaRead() and a big while loop to do this homework before. But my new program with interrupt is more efficiency!
+Up to this point, I learn how to read in buttons by interrupt and digitalRead(), and how to deal with the signal read in. 
+I got more familiar with JavaScript (BoneScript). At the same time I am work on C, since I like C.
+
+
