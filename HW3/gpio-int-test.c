@@ -116,14 +116,19 @@ int main(int argc, char **argv, char **envp)
 		if (fdset[1].revents & POLLPRI) {
 			lseek(fdset[1].fd, 0, SEEK_SET);  // Read from the start of the file
 			len = read(fdset[1].fd, buf, MAX_BUF);
-			//printf("\npoll() GPIO %d interrupt occurred, value=%c, len=%d\n",
-			//	 gpio, buf[0], len);
-			int value = buf[0] - 0x30; // convert string to integeri			
-			
+			printf("\npoll() GPIO %d interrupt occurred, value=%c, len=%d\n",
+				 gpio, buf[0], len);
+			int value = buf[0] - 0x30; // convert string to integeri
+
 			if(value) {
 				printf("Logic %d recieved on Alert Pin\n", value );
 				system("./myi2cget 1 72 0");
 			}
+			if(value == 0) {
+                                printf("Logic %d recieved on Alert Pin\n", value );
+                                system("./myi2cget 1 72 0");
+                        }
+
 
 		}
 
