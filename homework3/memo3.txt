@@ -1,0 +1,20 @@
+To: Dr. Yoder
+From: Jiayu Guo
+Date: 9/24/2014
+Subject: Memo2 for Etch and Temp Sensor
+
+This week I finished the i2c temperature sensors communicate with BeagleBone, 
+and added the Led matrix to Etch program. Switch two buttons to a rotary encoder.
+For the Temperature sensors, one has address pin set to 1, the other one set to 0. 
+In the program, I can set the High temperature limited and Low temperature limited separately 
+by different addresses. Once the temperature higher or lower than limited value, 
+alert pin will sent signal to BeagleBone. And then BeagleBone will display the alert message. 
+I write up setting limited values and read temperature in shell, 
+and reading alert in JavaScript.
+For the Led matrix, I download i2c package for JavaScript, added it to my homwork3 etch.js. 
+And also I change two buttons to a rotary encoder, I tried to modify the device tree to use 
+Eqep0 and Eqep1, but both fail. For now I can only use Eqep2. Instead of pushing button1 and 
+button2 to go up and down, I use the rotary encoder to control the vertical direction.
+In this homework3, I realize I should not modify anything that is not supposed to be changed 
+in the BeagleBone (like I changed the node to older version by mistake). Finally I have to reflash my sd card. 
+
