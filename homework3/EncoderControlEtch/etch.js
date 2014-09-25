@@ -4,6 +4,19 @@ var i2c = require('i2c');
 var address = 0x70;                           
 var matrix = new i2c(address, {device: '/dev/i2c-1'});
 
+var fs = require('fs');
+var eQEP0 = "/sys/devices/ocp.3/48300000.epwmss/48300180.eqep/",
+    eQEP1 = "/sys/devices/ocp.3/48302000.epwmss/48302180.eqep/",
+    eQEP2 = "/sys/devices/ocp.3/48304000.epwmss/48304180.eqep/",
+    eQEP = eQEP2;
+var oldData,            // pervious data read
+    oldData2,
+    period = 100;       // in ms
+
+
+
+
+
 var button1 = 'P9_11';
 var button2 = 'P9_13';
 var button3 = 'P9_17';
@@ -57,16 +70,19 @@ for (i=0; i<number; i++){
         console.log(faq[i]);
         var gridToParse = faq[i].join('');
         red[i] = parseInt(gridToParse,2);
-       console.log("red is "+red[i]);
+        console.log("red is "+red[i]);
         matrix.writeBytes(i*2, [green[i], red[i]]);
-	console.log("empt print to i2c");
 }
 
-b.attachInterrupt(button1, true, b.CHANGE, printStatus1);
-b.attachInterrupt(button2, true, b.CHANGE, printStatus2);
+setInterval(readEncoder, period); 
+
+//b.attachInterrupt(button1, true, b.CHANGE, printStatus1);
+//b.attachInterrupt(button2, true, b.CHANGE, printStatus2);
 b.attachInterrupt(button3, true, b.CHANGE, printStatus3);
 b.attachInterrupt(button4, true, b.CHANGE, printStatus4);
 b.attachInterrupt(bClear,  true, b.CHANGE, printStatus5);
+
+
 
 function printStatus1(x1)
 {     
@@ -192,11 +208,59 @@ function printStatus5(x5){
     {
     //console.log(faq[i]);
     var gridToParse = faq[i].join('');
-        red[i] = parseInt(gridToParse,2);
-        matrix.writeBytes(i*2, [green[i], red[i]]);
-	}
+    red[i] = parseInt(gridToParse,2);
+    matrix.writeBytes(i*2, [green[i], red[i]]);
+    }
   } 
 }
+
+function readEncoder(x) {
+    fs.readFile(eQEP + 'position', {encoding: 'utf8'}, printValue);
+ }
+
+ function printValue(err, data) {
+     if (err) throw err;
+
+     if (data>oldData){
+	console.log('data: '+data +'oldData' +oldData);
+    	if(z<7)z=z+1;
+    	faq[y][z]=1;
+    	for (i=0; i<number; i++){
+     		console.log(faq[i]);
+     		var gridToParse = faq[i].join('');
+     		red[i] = parseInt(gridToParse,2);
+     		matrix.writeBytes(i*2, [green[i], red[i]]);
+     		console.log("empt print to i2c");
+        	}
+        }
+
+     if (data<oldData){
+        console.log('data: '+data +'oldData' +oldData);   
+        if(z>0)z=z-1;
+        faq[y][z]=1;
+        for (i=0; i<number; i++){
+                console.log(faq[i]);
+                var gridToParse = faq[i].join('');
+                red[i] = parseInt(gridToParse,2);
+                matrix.writeBytes(i*2, [green[i], red[i]]);
+                console.log("empt print to i2c");
+                }
+        }
+
+
+
+
+
+	if (oldData !== data) {
+        	console.log('position: '+data); //+' speed: '+(oldData-data));
+		oldData = data;
+         }
+
+
+
+
+ }
+
 
 
 
